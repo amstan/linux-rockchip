@@ -72,6 +72,7 @@ struct cros_ec_command {
  *
  * @priv: Private data
  * @irq: Interrupt to use
+ * @id: Device id
  * @din: input buffer (for data from EC)
  * @dout: output buffer (for data to EC)
  * \note
@@ -106,6 +107,7 @@ struct cros_ec_device {
 	/* These are used to implement the platform-specific interface */
 	void *priv;
 	int irq;
+	int id;
 	uint8_t *din;
 	uint8_t *dout;
 	int din_size;

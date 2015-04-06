@@ -28,6 +28,8 @@
 
 #define EC_COMMAND_RETRIES	50
 
+static int dev_id;
+
 int cros_ec_prepare_tx(struct cros_ec_device *ec_dev,
 		       struct cros_ec_command *msg)
 {
@@ -130,6 +132,8 @@ int cros_ec_register(struct cros_ec_device *ec_dev)
 	struct device *dev = ec_dev->dev;
 	int err = 0;
 
+	ec_dev->id = dev_id;
+
 	if (ec_dev->din_size) {
 		ec_dev->din = devm_kzalloc(dev, ec_dev->din_size, GFP_KERNEL);
 		if (!ec_dev->din)
@@ -143,7 +147,7 @@ int cros_ec_register(struct cros_ec_device *ec_dev)
 
 	mutex_init(&ec_dev->lock);
 
-	err = mfd_add_devices(dev, 0, cros_devs,
+	err = mfd_add_devices(dev, ec_dev->id, cros_devs,
 			      ARRAY_SIZE(cros_devs),
 			      NULL, ec_dev->irq, NULL);
 	if (err) {
@@ -159,6 +163,7 @@ int cros_ec_register(struct cros_ec_device *ec_dev)
 		return err;
 	}
 #endif
+	dev_id += ARRAY_SIZE(cros_devs);
 
 	dev_info(dev, "Chrome EC device registered\n");
 

@@ -191,7 +191,7 @@ static int ec_device_probe(struct platform_device *pdev)
 {
 	struct cros_ec_device *ec = dev_get_drvdata(pdev->dev.parent);
 	int retval = -ENOTTY;
-	dev_t devno = MKDEV(ec_major, 0);
+	dev_t devno = MKDEV(ec_major, ec->id);
 
 	/* Instantiate it (and remember the EC) */
 	cdev_init(&ec->cdev, &fops);
@@ -203,7 +203,7 @@ static int ec_device_probe(struct platform_device *pdev)
 	}
 
 	ec->vdev = device_create(cros_class, NULL, devno, ec,
-				 CROS_EC_DEV_NAME);
+				 CROS_EC_DEV_NAME "%d", ec->id);
 	if (IS_ERR(ec->vdev)) {
 		retval = PTR_ERR(ec->vdev);
 		dev_err(&pdev->dev, ": failed to create device\n");
