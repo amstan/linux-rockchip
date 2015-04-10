@@ -15,7 +15,6 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/pinctrl/rockchip.h>
 #include <dt-bindings/clock/rk3288-cru.h>
-#include <dt-bindings/power-domain/rk3288.h>
 #include <dt-bindings/thermal/thermal.h>
 #include "skeleton.dtsi"
 
@@ -651,7 +650,6 @@
 		resets = <&cru SRST_LCDC0_AXI>, <&cru SRST_LCDC0_AHB>, <&cru SRST_LCDC0_DCLK>;
 		reset-names = "axi", "ahb", "dclk";
 		iommus = <&vopb_mmu>;
-		power-domains = <&power RK3288_PD_VIO>;
 		status = "disabled";
 		vopb_out: port {
 			#address-cells = <1>;
@@ -672,7 +670,6 @@
 		reg = <0xff930300 0x100>;
 		interrupts = <GIC_SPI 15 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "vopb_mmu";
-		power-domains = <&power RK3288_PD_VIO>;
 		#iommu-cells = <0>;
 		status = "disabled";
 	};
@@ -686,7 +683,6 @@
 		resets = <&cru SRST_LCDC1_AXI>, <&cru SRST_LCDC1_AHB>, <&cru SRST_LCDC1_DCLK>;
 		reset-names = "axi", "ahb", "dclk";
 		iommus = <&vopl_mmu>;
-		power-domains = <&power RK3288_PD_VIO>;
 		status = "disabled";
 		vopl_out: port {
 			#address-cells = <1>;
@@ -708,7 +704,6 @@
 		reg = <0xff940300 0x100>;
 		interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "vopl_mmu";
-		power-domains = <&power RK3288_PD_VIO>;
 		#iommu-cells = <0>;
 		status = "disabled";
 	};
@@ -722,7 +717,6 @@
 		clock-names = "clk_edp", "clk_edp_24m", "pclk_edp";
 		resets = <&cru 111>;
 		reset-names = "edp";
-		power-domains = <&power RK3288_PD_VIO>;
 		status = "disabled";
 		ports {
 			edp_in: port {
@@ -749,7 +743,6 @@
 		interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
 		clocks = <&cru  PCLK_HDMI_CTRL>, <&cru SCLK_HDMI_HDCP>;
 		clock-names = "iahb", "isfr";
-		power-domains = <&power RK3288_PD_VIO>;
 		status = "disabled";
 		ports {
 			hdmi_in: port {
@@ -781,7 +774,6 @@
 		interrupt-names = "vepu", "vdpu";
 		clocks = <&cru ACLK_VCODEC>, <&cru HCLK_VCODEC>;
 		clock-names = "aclk_vcodec", "hclk_vcodec";
-		power-domains = <&power RK3288_PD_VIDEO>;
 		iommus = <&vpu_mmu>;
 	};
 
@@ -790,7 +782,6 @@
 		reg = <0xff9a0800 0x100>;
 		interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "vpu_mmu";
-		power-domains = <&power RK3288_PD_VIDEO>;
 		#iommu-cells = <0>;
 	};
 
@@ -815,7 +806,6 @@
 			/* 500000 1200000 - See crosbug.com/p/33857 */
 			600000 1250000
 		>;
-		power-domains = <&power RK3288_PD_GPU>;
 		status = "disabled";
 	};
 
@@ -1411,64 +1401,6 @@
 						<4 2 3 &pcfg_pull_none>,
 						<4 3 3 &pcfg_pull_none>;
 			};
-		};
-	};
-
-	power: power-controller {
-		compatible = "rockchip,rk3288-power-controller";
-		#power-domain-cells = <1>;
-		rockchip,pmu = <&pmu>;
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		pd_gpu {
-			reg = <RK3288_PD_GPU>;
-			clocks = <&cru ACLK_GPU>;
-		};
-
-		pd_hevc {
-			reg = <RK3288_PD_HEVC>;
-			clocks = <&cru ACLK_HEVC>,
-				 <&cru SCLK_HEVC_CABAC>,
-				 <&cru SCLK_HEVC_CORE>,
-				 <&cru HCLK_HEVC>;
-		};
-
-		pd_vio {
-			reg = <RK3288_PD_VIO>;
-			clocks = <&cru ACLK_IEP>,
-				 <&cru ACLK_ISP>,
-				 <&cru ACLK_RGA>,
-				 <&cru ACLK_VIP>,
-				 <&cru ACLK_VOP0>,
-				 <&cru ACLK_VOP1>,
-				 <&cru DCLK_VOP0>,
-				 <&cru DCLK_VOP1>,
-				 <&cru HCLK_IEP>,
-				 <&cru HCLK_ISP>,
-				 <&cru HCLK_RGA>,
-				 <&cru HCLK_VIP>,
-				 <&cru HCLK_VOP0>,
-				 <&cru HCLK_VOP1>,
-				 <&cru PCLK_EDP_CTRL>,
-				 <&cru PCLK_HDMI_CTRL>,
-				 <&cru PCLK_LVDS_PHY>,
-				 <&cru PCLK_MIPI_CSI>,
-				 <&cru PCLK_MIPI_DSI0>,
-				 <&cru PCLK_MIPI_DSI1>,
-				 <&cru SCLK_EDP_24M>,
-				 <&cru SCLK_EDP>,
-				 <&cru SCLK_HDMI_CEC>,
-				 <&cru SCLK_HDMI_HDCP>,
-				 <&cru SCLK_ISP_JPE>,
-				 <&cru SCLK_ISP>,
-				 <&cru SCLK_RGA>;
-		};
-
-		pd_video {
-			reg = <RK3288_PD_VIDEO>;
-			clocks = <&cru ACLK_VCODEC>,
-				 <&cru HCLK_VCODEC>;
 		};
 	};
 };
