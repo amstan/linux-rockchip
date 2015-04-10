@@ -1,5 +1,5 @@
 /*
- * Device Tree Source for RK3288 SoC thermal
+ * Device Tree Source for RK3288 Soc thermal on speedy board
  *
  * Copyright (c) 2014, Fuzhou Rockchip Electronics Co., Ltd
  *
@@ -29,17 +29,17 @@ cpu_thermal: cpu_thermal {
 
 	trips {
 		cpu_alert0: cpu_alert0 {
-			temperature = <70000>; /* millicelsius */
+			temperature = <65000>; /* millicelsius */
 			hysteresis = <2000>; /* millicelsius */
 			type = "passive";
 		};
 		cpu_alert1: cpu_alert1 {
-			temperature = <75000>; /* millicelsius */
+			temperature = <70000>; /* millicelsius */
 			hysteresis = <2000>; /* millicelsius */
 			type = "passive";
 		};
 		cpu_crit: cpu_crit {
-			temperature = <100000>; /* millicelsius */
+			temperature = <90000>; /* millicelsius */
 			hysteresis = <2000>; /* millicelsius */
 			type = "critical";
 		};
@@ -74,7 +74,7 @@ gpu_thermal: gpu_thermal {
 			type = "passive";
 		};
 		gpu_crit: gpu_crit {
-			temperature = <100000>; /* millicelsius */
+			temperature = <90000>; /* millicelsius */
 			hysteresis = <2000>; /* millicelsius */
 			type = "critical";
 		};

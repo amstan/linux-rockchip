@@ -1,0 +1,29 @@
+/*
+ * Google Veyron Speedy Rev 1 board device tree source
+ *
+ * Copyright 2014 Google, Inc
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "rk3288-speedy.dts"
+
+/ {
+	compatible = "google,veyron-speedy-rev1", "google,veyron-speedy",
+		     "google,veyron", "rockchip,rk3288";
+};
+
+&pinctrl {
+	edp {
+		/*
+		 * The panel cable of speedy-rev1 have some problem, the hpd
+		 * signal is incorrect. Do not use the hpd function, switch its
+		 * pinmux to gpio function.
+		 */
+		edp_hpd: edp_hpd {
+			rockchip,pins = <7 11 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};

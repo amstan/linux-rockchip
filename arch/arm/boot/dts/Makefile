@@ -448,6 +448,20 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3066a-marsboard.dtb \
 	rk3066a-rayeager.dtb \
 	rk3188-radxarock.dtb \
+	rk3288-brain-rev0.dtb \
+	rk3288-danger-rev0.dtb \
+	rk3288-evb-act8846.dtb \
+	rk3288-evb-rk808.dtb \
+	rk3288-gus-rev1.dtb \
+	rk3288-jaq-rev1.dtb \
+	rk3288-jerry-rev2.dtb \
+	rk3288-jerry-rev3.dtb \
+	rk3288-mighty-rev1.dtb \
+	rk3288-minnie-rev0.dtb \
+	rk3288-pinky-rev2.dtb \
+	rk3288-rialto-rev0.dtb \
+	rk3288-speedy.dtb \
+	rk3288-speedy-rev1.dtb \
 	rk3288-evb-act8846.dtb \
 	rk3288-evb-rk808.dtb \
 	rk3288-firefly-beta.dtb \
