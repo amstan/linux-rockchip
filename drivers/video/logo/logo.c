@@ -30,11 +30,11 @@ static bool logos_freed;
 
 static int __init fb_logo_late_init(void)
 {
-	logos_freed = true;
+//	logos_freed = true;
 	return 0;
 }
 
-late_initcall(fb_logo_late_init);
+//late_initcall(fb_logo_late_init);
 
 /* logo's are marked __initdata. Use __init_refok to tell
  * modpost that it is intended that this function uses data
