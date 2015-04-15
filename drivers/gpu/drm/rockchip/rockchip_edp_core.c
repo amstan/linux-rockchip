@@ -839,7 +839,7 @@ static int rockchip_edp_probe(struct platform_device *pdev)
 
 	endpoint = of_get_child_by_name(port, "endpoint");
 	of_node_put(port);
-	if (endpoint) {
+	if (!endpoint) {
 		dev_err(dev, "no output endpoint found\n");
 		return -EINVAL;
 	}
@@ -854,7 +854,7 @@ static int rockchip_edp_probe(struct platform_device *pdev)
 	panel = of_drm_find_panel(panel_node);
 	of_node_put(panel_node);
 	if (!panel) {
-		DRM_ERROR("failed to find panel\n");
+		dev_dbg(&pdev->dev, "failed to find panel\n");
 		return -EPROBE_DEFER;
 	}
 
