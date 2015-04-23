@@ -465,6 +465,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3288-evb-rk808.dtb \
 	rk3288-pinky-rev2.dtb \
 	rk3288-jaq-rev1.dtb \
+	rk3288-minnie-rev0.dtb \
 	rk3288-firefly-beta.dtb \
 	rk3288-firefly.dtb
 dtb-$(CONFIG_ARCH_S3C24XX) += \
